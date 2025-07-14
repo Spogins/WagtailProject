@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% load static wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block content %}
+    <h1>{{ page.title }}</h1>
+    <div class="intro">
+        <h2>{{ page.intro|richtext }}</h2>
+    </div>
+
+    <div class="cards">
+        {% for block in page.body %}
+            {% if block.block_type == "card" %}
+        <div class="card">
+                <div class="card-heading">
+                    <h4>Card name: {{ block.value.heading }}</h4>
+                </div>
+                {% if block.value.price %}
+                    <div class="card-price">
+                        {% for price in block.value.price %}
+                            <div class="card-price-notice" data-label="Notice:">
+                                {{ price.value.notice }}
+                            </div>
+                            <div class="card-price-amount" data-label="Price:">
+                                {{ price.value.amount }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="card-text">
+                    {{ block.value.text }}
+                </div>
+                <div class="card-image">
+                    {% if block.value.image %}
+                        {% image block.value.image fill-250x300 %}
+                    {% endif %}
+                </div>
+                {% if block.value.card_check %}
+                    <div class="card-price">
+                        {% for card_check in block.value.card_check %}
+                            <div class="card-check-state" data-label="State:">
+                                {{ card_check.value.state }}
+                            </div>
+                            <div class="card-check-rarity" data-label="Rarity:">
+                                {{ card_check.value.rarity }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="sale">
+
+                </div>
+
+        </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

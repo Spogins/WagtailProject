@@ -1,0 +1,24 @@
+[project]
+name = "testp"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Spogins",email = "spogins@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12 <4.0.0"
+dependencies = [
+    "psycopg2 (>=2.9.10,<3.0.0)",
+    "wagtail (==6.4.2)",
+    "django-vite (>=3.1.0,<4.0.0)",
+    "django-environ (>=0.12.0,<0.13.0)",
+    "django-debug-toolbar (>=5.2.0,<6.0.0)",
+    "django-components (>=0.141.1,<0.142.0)",
+    "wagtail-modeltranslation (>=0.15.2,<0.16.0)",
+    "six (>=1.17.0,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
