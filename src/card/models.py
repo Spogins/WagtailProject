@@ -1,3 +1,4 @@
+from django.db import models
 from wagtail.admin.panels import FieldPanel
 from wagtail.models import Page
 from wagtail.fields import RichTextField, StreamField
@@ -21,6 +22,14 @@ class CardIndexPage(Page):
 
 class CardPage(Page):
     intro = RichTextField(blank=True)
+    image = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        help_text="Cardpage image",
+    )
 
     body = StreamField(
         CardStreamBlock(),
@@ -31,6 +40,7 @@ class CardPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('intro'),
+        FieldPanel("image"),
         FieldPanel("body"),
 
     ]

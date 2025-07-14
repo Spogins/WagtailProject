@@ -1,21 +1,46 @@
 {% extends "base.html" %}
-
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}template-blogindexpage{% endblock %}
 
 {% block content %}
-    <h1>{{ page.title }}</h1>
+  <h1>{{ page.title }}</h1>
+  <div class="intro">{{ page.intro|richtext }}</div>
 
-    <div class="intro">{{ page.intro|richtext }}</div>
+  {% if cards %}
+  <div id="cardCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
 
-    {% for card in cards %}
+      {% for card in cards %}
         {% with card=card.specific %}
-        <div>
-            <h2><a href="{% pageurl card %}">{{ card.title }}</a></h2>
-            <div>{{ card.intro|richtext }}</div>
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <div class="d-flex justify-content-center">
+            <div class="card" style="width: 30rem;">
+              {% if card.image %}
+                {% image card.image original as img %}
+                <img src="{{ img.url }}" class="card-img-top" alt="{{ card.title }}">
+              {% endif %}
+              <div class="card-body text-center">
+                <h5 class="card-title">{{ card.title }}</h5>
+                <a href="{% pageurl card %}" class="btn btn-primary">Перейти</a>
+              </div>
+            </div>
+          </div>
         </div>
         {% endwith %}
-    {% endfor %}
+      {% endfor %}
 
+    </div>
+
+    <!-- Управление каруселью -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#cardCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Назад</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#cardCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Вперёд</span>
+    </button>
+  </div>
+  {% endif %}
 {% endblock %}
